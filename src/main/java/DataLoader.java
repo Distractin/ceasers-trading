@@ -7,8 +7,8 @@ import java.util.*;
 
 public class DataLoader {
 
-    public static ArrayDataset createDataset(NDManager manager) {
-        Path folder = Paths.get("src/main/java/data");
+    public static ArrayDataset createDataset(NDManager manager,String filepath) {
+        Path folder = Paths.get(filepath);
         List<float[][]> xList = new ArrayList<>();
         List<float[]> yList = new ArrayList<>();
         int windowSize = 100;
@@ -47,7 +47,7 @@ public class DataLoader {
                     float[] normalized = new float[3];
                     normalized[0] = (row[0] - mean) / stdDev; // Price Z-Score
                     normalized[1] = (float) Math.log1p(row[1]); // Log scale for Qty (better for outliers)
-                    normalized[2] = row[2]; // Side (0 or 1)
+                    //normalized[2] = row[2]; // Side (0 or 1)
                     normalizedRows.add(normalized);
                 }
 
@@ -69,7 +69,7 @@ public class DataLoader {
 
     private static ArrayDataset buildDataset(NDManager manager, List<float[][]> xList, List<float[]> yList, int windowSize) {
         int numSamples = xList.size();
-        int numCols = 3;
+        int numCols = 2;
         float[] flatX = new float[numSamples * windowSize * numCols];
         int offset = 0;
         for (float[][] window : xList) {

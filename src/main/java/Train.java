@@ -15,10 +15,9 @@ import ai.djl.training.DefaultTrainingConfig;
 import java.nio.file.Paths;
 
 public class Train {
-
     public static void main(String[] args) throws Exception {
-        int epochs = 10;
-        Shape inputShape = new Shape(1, 100, 3); 
+        int epochs = 300;
+        Shape inputShape = new Shape(1, 100, 2); 
 
         try (NDManager manager = NDManager.newBaseManager()) {
 
@@ -26,7 +25,7 @@ public class Train {
             Model model = Model.newInstance("crypto-predictor");
             model.setBlock(MyModel.buildModel());
 
-            ArrayDataset dataset = DataLoader.createDataset(manager);
+            ArrayDataset dataset = DataLoader.createDataset(manager, "src/main/java/data");
             System.out.println("Data Loaded Successfully.");
 
             // 4. Configure Training
@@ -87,7 +86,7 @@ public class Train {
                     float avgLoss = epochLoss / batches;
                     System.out.printf("%n[DONE] Epoch %d | Average Loss: %.6f%n", epoch, avgLoss);
                     
-                    if (epoch % 5 == 0) {
+                    if (epoch % 100 == 0) {
                         model.save(Paths.get("model"), "crypto-checkpoint");
                     }
                 }

@@ -21,7 +21,7 @@ public static Block buildModel() {
     block.add(Activation.leakyReluBlock(0.2f)); // And here
 
     // Final Output Layer
-    block.add(Linear.builder().setUnits(3).build()); 
+    block.add(Linear.builder().setUnits(2).build()); 
     
     return block;
 }

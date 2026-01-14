@@ -17,7 +17,7 @@ public class TestModel {
             model.setBlock(MyModel.buildModel());
             model.load(Paths.get("model"), "trained-model");
 
-            ArrayDataset testDataset = DataLoader.createDataset(manager);
+            ArrayDataset testDataset = DataLoader.createDataset(manager,"src/main/java/data");
 
             try (Predictor<NDList, NDList> predictor = model.newPredictor(new NoopTranslator())) {
                 
